@@ -38,3 +38,4 @@ cloudbees-folder
 script-security
 ws-cleanup
 pipeline-stage-view
+oic-auth
