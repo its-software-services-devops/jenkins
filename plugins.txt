@@ -1,3 +1,4 @@
+oic-auth
 matrix-auth
 credentials
 kubernetes-client-api
@@ -38,4 +39,3 @@ cloudbees-folder
 script-security
 ws-cleanup
 pipeline-stage-view
-oic-auth
