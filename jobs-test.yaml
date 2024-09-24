@@ -4,7 +4,7 @@ jobs:
   - script: >
       folder('GTT/DevOps-Build')
   - script: >
-      multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training") 
+      multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training")
       {
         branchSources {
           git {
@@ -24,7 +24,11 @@ jobs:
                 matchBranches(false)
                 fallbackBranch("master")
             }
-        } 
+        }
+
+        properties {
+            library('Common-Share-Libs@main')
+        }
 
         configure { project ->
             def factoryNode = project / 'factory'
@@ -47,6 +51,28 @@ jobs:
                         name('main')
                     }
                 }                    
+            }
+        }
+
+        configure { job ->
+            job / 'properties' << 'com.cloudbees.plugins.credentials.SystemCredentialsProvider' {
+                'domainCredentials' {
+                    'com.cloudbees.plugins.credentials.domains.Domain' {
+                        'name'('Global')
+                        'specifications' {
+                            'com.cloudbees.plugins.credentials.domains.HostnameSpecification' {
+                                'host'('bitbucket.org')
+                            }
+                        }
+                    }
+                }
+            }
+
+            job / 'libraries' << 'com.cloudbees.jenkins.plugins.bitbucket.BranchSource' {
+                'id'('astro-jenkins-share-libs')
+                'remote'('git@bitbucket.org:astrosolutions-co-th/astro-jenkins-share-libs.git')
+                'credentialsId'('pjames-bitbucket-ssh-private-key')
+                'includes'('main')
             }
         }
 
