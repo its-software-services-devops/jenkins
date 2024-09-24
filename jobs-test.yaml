@@ -11,6 +11,28 @@ jobs:
           }
         }
 
+        factory{
+          remoteJenkinsFileWorkflowBranchProjectFactory{
+            localMarker("")
+            matchBranches(true)
+            remoteJenkinsFile("Jenkinsfile_Common")
+            remoteJenkinsFileSCM{
+              gitSCM{
+                userRemoteConfigs{
+                  userRemoteConfig{
+                    name("astro-gtt-jenkins-files")
+                    url("git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git")
+                    refspec("master")
+                    credentialsId("pjames_bitbucket_ssh_private_key")
+                  }
+                  browser{}
+                  gitTool("")
+                }
+              }
+            }
+          }
+        }
+
         orphanedItemStrategy {
             discardOldItems {
                 numToKeep(20)
