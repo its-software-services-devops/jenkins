@@ -1,5 +1,9 @@
 jobs:
   - script: >
+      folder('GTT')
+  - script: >
+      folder('GTT/DevOps-Build')
+  - script: >
       multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training") 
       {
         branchSources {
