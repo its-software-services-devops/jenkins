@@ -15,26 +15,39 @@ jobs:
           }
         }
 
-        factory{
-          remoteJenkinsFileWorkflowBranchProjectFactory{
-            localMarker("")
-            matchBranches(true)
-            remoteJenkinsFile("Jenkinsfile_Common")
-            remoteJenkinsFileSCM{
-              gitSCM{
-                userRemoteConfigs{
-                  userRemoteConfig{
-                    name("astro-gtt-jenkins-files")
-                    url("git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git")
-                    refspec("master")
-                    credentialsId("pjames-bitbucket-ssh-private-key")
-                  }
-                  browser{}
-                  gitTool("")
-                }
-              }
+        factory
+        {
+            remoteJenkinsFileWorkflowBranchProjectFactory 
+            {
+                remoteJenkinsFile("Jenkinsfile_Common")
+                localMarker("")
+                matchBranches(false)
+                fallbackBranch("master")
             }
-          }
+        } 
+
+        configure { project ->
+            def factoryNode = project / 'factory'
+            factoryNode << owner(class:'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject', reference:'../..')
+        
+            factoryNode << remoteJenkinsFileSCM(class:'hudson.plugins.git.GitSCM') {
+                userRemoteConfigs 
+                {
+                    'hudson.plugins.git.UserRemoteConfig' 
+                    {
+                        url('git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git')
+                        credentialsId('pjames-bitbucket-ssh-private-key')
+                    }
+                }
+
+                branches 
+                {
+                    'hudson.plugins.git.BranchSpec' 
+                    {
+                        name('main')
+                    }
+                }                    
+            }
         }
 
         orphanedItemStrategy {
