@@ -1,4 +1,5 @@
 oic-auth
+ssh-agent
 matrix-auth
 credentials
 kubernetes-client-api
