@@ -1,10 +1,46 @@
 jobs:
   - script: >
-      multibranchPipelineJob('configuration-as-code') {
-          branchSources {
-              git {
-                  id = 'configuration-as-code'
-                  remote('https://github.com/jenkinsci/configuration-as-code-plugin.git')
-              }
+      multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training") {
+        branchSources {
+          git {
+            id = "astro-devops-training"
+            remote("git@bitbucket.org:astrosolutions-co-th/astro-devops-training.git")
+            credentialsId("pjames_bitbucket_ssh_private_key")
+            includes("develop main")
           }
+        }
       }
+        factory
+        {
+            remoteJenkinsFileWorkflowBranchProjectFactory 
+            {
+                remoteJenkinsFile("Jenkinsfile_Common")
+                localMarker("")
+                matchBranches(false)
+                fallbackBranch("master")
+            }
+        } 
+
+        configure { project ->
+            def factoryNode = project / 'factory'
+            factoryNode << owner(class:'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject', reference:'../..')
+        
+            factoryNode << remoteJenkinsFileSCM(class:'hudson.plugins.git.GitSCM') {
+                userRemoteConfigs 
+                {
+                    'hudson.plugins.git.UserRemoteConfig' 
+                    {
+                        url('git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git')
+                        credentialsId('pjames_bitbucket_ssh_private_key')
+                    }
+                }
+
+                branches 
+                {
+                    'hudson.plugins.git.BranchSpec' 
+                    {
+                        name('main')
+                    }
+                }                    
+            }
+        }
