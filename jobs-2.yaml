@@ -1,0 +1,58 @@
+jobs:
+  - script: >
+      folder('GTT')
+  - script: >
+      folder('GTT/Build')
+  - script: >
+      multibranchPipelineJob("GTT/Build/premium-service-v2")
+      {
+        branchSources {
+          git {
+            id = "premium-service-v2"
+            remote("git@bitbucket.org:astrosolutions-co-th/premium-service-v2.git")
+            credentialsId("pjames_bitbucket_ssh_private_key")
+            includes("development|sit|uat|production")
+          }
+        }
+
+        factory
+        {
+            remoteJenkinsFileWorkflowBranchProjectFactory 
+            {
+                remoteJenkinsFile("Jenkinsfile_Common")
+                localMarker("")
+                matchBranches(false)
+                fallbackBranch("master")
+            }
+        }
+
+        configure { project ->
+            def factoryNode = project / 'factory'
+            factoryNode << owner(class:'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject', reference:'../..')
+        
+            factoryNode << remoteJenkinsFileSCM(class:'hudson.plugins.git.GitSCM') {
+                userRemoteConfigs 
+                {
+                    'hudson.plugins.git.UserRemoteConfig' 
+                    {
+                        url('git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git')
+                        credentialsId('pjames_bitbucket_ssh_private_key')
+                    }
+                }
+
+                branches 
+                {
+                    'hudson.plugins.git.BranchSpec' 
+                    {
+                        name('main')
+                    }
+                }                    
+            }
+        }
+
+        orphanedItemStrategy {
+            discardOldItems {
+                numToKeep(20)
+            }
+        }
+      }

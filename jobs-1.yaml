@@ -4,8 +4,6 @@ jobs:
   - script: >
       folder('GTT/DevOps-Build')
   - script: >
-      folder('GTT/Build')
-  - script: >
       multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training")
       {
         branchSources {
@@ -13,18 +11,7 @@ jobs:
             id = "astro-devops-training"
             remote("git@bitbucket.org:astrosolutions-co-th/astro-devops-training.git")
             credentialsId("pjames_bitbucket_ssh_private_key")
-            includes("develop|main")
-          }
-        }
-
-      multibranchPipelineJob("GTT/Build/premium-service-v2")
-      {
-        branchSources {
-          git {
-            id = "astro-devops-training"
-            remote("git@bitbucket.org:astrosolutions-co-th/premium-service-v2.git")
-            credentialsId("pjames_bitbucket_ssh_private_key")
-            includes("development|sit|uat|production")
+            includes("develop main")
           }
         }
 
