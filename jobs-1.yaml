@@ -50,6 +50,11 @@ jobs:
             }
         }
 
+        triggers
+        {
+            cron('*/5 * * * *')
+        }
+
         orphanedItemStrategy {
             discardOldItems {
                 numToKeep(20)
