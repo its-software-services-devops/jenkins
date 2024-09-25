@@ -10,7 +10,7 @@ jobs:
           git {
             id = "astro-devops-training"
             remote("git@bitbucket.org:astrosolutions-co-th/astro-devops-training.git")
-            credentialsId("pjames-bitbucket-ssh-private-key")
+            credentialsId("pjames_bitbucket_ssh_private_key")
             includes("develop main")
           }
         }
@@ -36,7 +36,7 @@ jobs:
                     'hudson.plugins.git.UserRemoteConfig' 
                     {
                         url('git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git')
-                        credentialsId('pjames-bitbucket-ssh-private-key')
+                        credentialsId('pjames_bitbucket_ssh_private_key')
                     }
                 }
 
