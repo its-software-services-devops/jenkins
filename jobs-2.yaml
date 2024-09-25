@@ -10,7 +10,7 @@ jobs:
           git {
             id = "premium-service-v2"
             remote("git@bitbucket.org:astrosolutions-co-th/premium-service-v2.git")
-            credentialsId("pjames_bitbucket_ssh_private_key")
+            credentialsId("PJames-Bitbucket-SSH-Key")
             includes("development sit uat production")
           }
         }
@@ -36,7 +36,7 @@ jobs:
                     'hudson.plugins.git.UserRemoteConfig' 
                     {
                         url('git@bitbucket.org:astrosolutions-co-th/astro-gtt-jenkins-files.git')
-                        credentialsId('pjames_bitbucket_ssh_private_key')
+                        credentialsId('PJames-Bitbucket-SSH-Key')
                     }
                 }
 
