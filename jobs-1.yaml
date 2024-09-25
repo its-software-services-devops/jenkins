@@ -1,18 +1,18 @@
 jobs:
-  - script: >
-      folder('GTT')
-  - script: >
-      folder('GTT/DevOps-Build')
-  - script: >
-      multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training")
-      {
+    - script: >
+        folder('GTT')
+    - script: >
+        folder('GTT/DevOps-Build')
+    - script: >
+        multibranchPipelineJob("GTT/DevOps-Build/astro-devops-training")
+        {
         branchSources {
-          git {
-            id = "astro-devops-training"
-            remote("git@bitbucket.org:astrosolutions-co-th/astro-devops-training.git")
-            credentialsId("PJames-Bitbucket-SSH-Key")
-            includes("develop main")
-          }
+            git {
+                id = "astro-devops-training"
+                remote("git@bitbucket.org:astrosolutions-co-th/astro-devops-training.git")
+                credentialsId("PJames-Bitbucket-SSH-Key")
+                includes("develop main")
+            }
         }
 
         factory
@@ -60,4 +60,4 @@ jobs:
                 numToKeep(20)
             }
         }
-      }
+        }
