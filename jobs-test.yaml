@@ -26,10 +26,6 @@ jobs:
             }
         }
 
-        properties {
-            library('Common-Share-Libs@main')
-        }
-
         configure { project ->
             def factoryNode = project / 'factory'
             factoryNode << owner(class:'org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject', reference:'../..')
@@ -51,28 +47,6 @@ jobs:
                         name('main')
                     }
                 }                    
-            }
-        }
-
-        configure { job ->
-            job / 'properties' << 'com.cloudbees.plugins.credentials.SystemCredentialsProvider' {
-                'domainCredentials' {
-                    'com.cloudbees.plugins.credentials.domains.Domain' {
-                        'name'('Global')
-                        'specifications' {
-                            'com.cloudbees.plugins.credentials.domains.HostnameSpecification' {
-                                'host'('bitbucket.org')
-                            }
-                        }
-                    }
-                }
-            }
-
-            job / 'libraries' << 'com.cloudbees.jenkins.plugins.bitbucket.BranchSource' {
-                'id'('astro-jenkins-share-libs')
-                'remote'('git@bitbucket.org:astrosolutions-co-th/astro-jenkins-share-libs.git')
-                'credentialsId'('pjames-bitbucket-ssh-private-key')
-                'includes'('main')
             }
         }
 
