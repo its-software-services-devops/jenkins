@@ -3,6 +3,7 @@ authorize-project
 aws-java-sdk
 aws-credentials
 basic-branch-build-strategies
+bitbucket
 bouncycastle-api
 cloudbees-folder
 configuration-as-code
